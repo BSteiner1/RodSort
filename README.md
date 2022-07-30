@@ -9,3 +9,4 @@
 ❓ **Analysis:**
 - It has a best-case run-time of O(n)
 - And a worst-case run-time of O(n²)
+- It is also a [stable sorting algorithm](https://www.geeksforgeeks.org/stability-in-sorting-algorithms/) 
