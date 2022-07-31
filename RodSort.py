@@ -13,34 +13,33 @@ def insert_number(list, x):
     else:
       list = list[:index] + [x] + list[index:]
       
-    return list, index              # 0th index is the list, 1st is index
-
+    return list, index              
 
 #--------------------------------------------------------------------------
 
-def insert_by_index(list, num, index):
-    
-    recycle_bin = []
+def insert_by_index(list, num, index, bin):
     
     if list == []:
         list.append(num)
-        return list, recycle_bin
         
+        return list, bin
         
-    if index > len(list):
+    if index >= len(list):
         index = len(list)
-        if num >= list[index-1]:
+        if num >= list[-1]:
             list.append(num)
         else:
-            recycle_bin.append(num)
+            bin.append(num)
+            
+        return list, bin
         
     else:
-        if num >= list[index] and num <= list[index+1]:
-            list = list[:index] + [num] + list[index:]
+        if num >= list[index-1] and num <= list[index]:
+            list.insert(index, num)
         else:
-            recycle_bin.append(num)
-
-    return list, recycle_bin
+            bin.append(num)
+  
+    return list, bin
 
 #--------------------------------------------------------------------
 
@@ -56,20 +55,23 @@ def RodSort(lst):
         
         if rod[0] < rod[1]:
             None
+            
+        if lst[i] <= lst[i + rod_length]:
+            rod = [lst[i], lst[i + rod_length]]
         else:
-            rod = [rod[1], rod[0]]
+            rod = [lst[i + rod_length], lst[i]]
         
-        insert_number(second_half, rod[1])
+        index = insert_number(second_half, rod[1])[1]
         second_half = insert_number(second_half, rod[1])[0] 
         
-        first_half = insert_by_index(first_half, 2, 5)
-        
-        #first_half = insert_number(first_half, rod[0])[0]
+        insert_by_index(first_half, rod[0], index, recycle_bin)
         
                 
     return first_half, second_half, recycle_bin
 
-numbs = [6,1,7,2,8,4]                
+
+import random
+numbs = [randint(0,20) for i in range(16)]                
             
 print(RodSort(numbs))
         
