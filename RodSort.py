@@ -1,29 +1,32 @@
-def insert_number(list, x):
+def insert_number(list, num):
   
     index = len(list)
     # Searching for the position
     for i in range(len(list)):
-      if list[i] > x:
+      if list[i] > num:
         index = i
         break
   
-    # Inserting n in the list
+    # Inserting num in the list
     if index == len(list):
-      list = list[:index] + [x]
+      list = list[:index] + [num]
     else:
-      list = list[:index] + [x] + list[index:]
+      list = list[:index] + [num] + list[index:]
       
-    return list, index              
+    return list, index                
 
 #--------------------------------------------------------------------------
 
 def insert_by_index(list, num, index, bin):
     
+    # Check if list is empty
     if list == []:
         list.append(num)
         
         return list, bin
         
+    # If the index is out of range, we will make it the last index of the 
+    # list and try and place it at the end
     if index >= len(list):
         index = len(list)
         if num >= list[-1]:
@@ -32,7 +35,9 @@ def insert_by_index(list, num, index, bin):
             bin.append(num)
             
         return list, bin
-        
+     
+    # Otherwise, check if we can keep the list in non-decreasing order by
+    # inserting it
     else:
         if num >= list[index-1] and num <= list[index]:
             list.insert(index, num)
@@ -43,35 +48,63 @@ def insert_by_index(list, num, index, bin):
 
 #--------------------------------------------------------------------
 
-def RodSort(lst):
+def initial_sort(lst):
     
+    # Initialise the lists we will need
     first_half = []
     second_half = []
     recycle_bin = []
     rod_length = int(len(lst)/2)
     
+    # Set the rod length as half of the length of the list
     for i in range(rod_length):
         rod = [lst[i], lst[i + rod_length]]
         
         if rod[0] < rod[1]:
             None
-            
+          
+        # Rotate the rod so the larger number of the two is at index 1
         if lst[i] <= lst[i + rod_length]:
             rod = [lst[i], lst[i + rod_length]]
         else:
             rod = [lst[i + rod_length], lst[i]]
         
+        # Insert the larger number into second_half
         index = insert_number(second_half, rod[1])[1]
         second_half = insert_number(second_half, rod[1])[0] 
         
+        # Check if we can insert the lesser number into the first_half list
         insert_by_index(first_half, rod[0], index, recycle_bin)
         
-                
     return first_half, second_half, recycle_bin
+
+# -----------------------------------------------------------------------
+
+def empty_bin(recycle_bin, list):
+
+    # Place number into list and remove from recycle bin
+    for i in range(len(recycle_bin)):
+        list = insert_number(list, recycle_bin[-1])[0]
+        recycle_bin.pop()
+        
+    return list, recycle_bin
+
+# ------------------------------------------------------------------------
+        
+def RodSort(lst):
+    
+    first_half = initial_sort(lst)[0]
+    second_half = initial_sort(lst)[1]
+    recycle_bin = initial_sort(lst)[2]
+    
+    full_first_half = empty_bin(recycle_bin, first_half)[0]
+    new_bin = empty_bin(recycle_bin, first_half)[1]
+    
+    return full_first_half, second_half, new_bin
 
 
 import random
-numbs = [randint(0,20) for i in range(16)]                
+numbs = [random.randint(0,20) for i in range(18)]                
             
 print(RodSort(numbs))
         
