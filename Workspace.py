@@ -1,22 +1,21 @@
-def insert_number(list, x):
+def insert_number(list, num):
   
     index = len(list)
     # Searching for the position
     for i in range(len(list)):
-      if list[i] > x:
+      if list[i] > num:
         index = i
         break
   
     # Inserting n in the list
     if index == len(list):
-      list = list[:index] + [x]
+      list = list[:index] + [num]
     else:
-      list = list[:index] + [x] + list[index:]
+      list = list[:index] + [num] + list[index:]
       
-    return list, index 
+    return list, index            
 
-from random import randint
-
+#--------------------------------------------------------------------------
 
 def insert_by_index(list, num, index, bin):
     
@@ -42,19 +41,60 @@ def insert_by_index(list, num, index, bin):
   
     return list, bin
 
+#--------------------------------------------------------------------
+
+def initial_sort(lst):
     
-binn = []
-list = []
-list2 = [randint(0,10) for i in range(10)]
-
-print(list2)
-
-for x in list2:
-    z = randint(0,10)
-    insert_by_index(list, x, z, binn)
-    print(list, binn)
+    first_half = []
+    second_half = []
+    recycle_bin = []
+    rod_length = int(len(lst)/2)
     
-print('SUM: ', len(list) + len(binn))
+    for i in range(rod_length):
+        rod = [lst[i], lst[i + rod_length]]
+        
+        if rod[0] < rod[1]:
+            None
+            
+        if lst[i] <= lst[i + rod_length]:
+            rod = [lst[i], lst[i + rod_length]]
+        else:
+            rod = [lst[i + rod_length], lst[i]]
+        
+        index = insert_number(second_half, rod[1])[1]
+        second_half = insert_number(second_half, rod[1])[0] 
+        
+        insert_by_index(first_half, rod[0], index, recycle_bin)
+        
+    return first_half, second_half, recycle_bin
 
+# -----------------------------------------------------------------------
 
+def empty_bin(recycle_bin, list):
+
+    for i in range(len(recycle_bin)):
+        list = insert_number(list, recycle_bin[-1])[0]
+        recycle_bin.pop()
+        
+    return list, recycle_bin
+
+# ------------------------------------------------------------------------
+        
+def RodSort(lst):
     
+    first_half = initial_sort(lst)[0]
+    second_half = initial_sort(lst)[1]
+    recycle_bin = initial_sort(lst)[2]
+    
+    full_first_half = empty_bin(recycle_bin, first_half)[0]
+    new_bin = empty_bin(recycle_bin, first_half)[1]
+    
+    return full_first_half, second_half, new_bin
+
+
+import random
+numbs = [random.randint(0,20) for i in range(16)]                
+            
+print(RodSort(numbs))
+        
+
