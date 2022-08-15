@@ -90,6 +90,26 @@ def empty_bin(recycle_bin, list):
     return list, recycle_bin
 
 # ------------------------------------------------------------------------
+
+def Merge(left , right ):
+    
+    l, r = 0, 0
+    result = []
+    
+    while l < len(left) and r < len(right ):
+        if left[l] < right[r]:
+            result.append(left[l])
+            l += 1
+        else:
+            result.append(right[r])
+            r += 1
+            
+    result += left[l:]
+    result += right[r:]
+    
+    return result
+
+# -------------------------------------------------------------------------
         
 def RodSort(lst):
     
@@ -97,15 +117,19 @@ def RodSort(lst):
     second_half = initial_sort(lst)[1]
     recycle_bin = initial_sort(lst)[2]
     
+    # Empty the bin into the first list
     full_first_half = empty_bin(recycle_bin, first_half)[0]
-    new_bin = empty_bin(recycle_bin, first_half)[1]
     
-    return full_first_half, second_half, new_bin
+    # Merge the two lists together
+    sorted_list = Merge(full_first_half, second_half)
+    
+    return sorted_list
 
 
 import random
-numbs = [random.randint(0,20) for i in range(18)]                
+numbs = [random.randint(0,20) for i in range(20)]                
             
 print(RodSort(numbs))
         
+
 
