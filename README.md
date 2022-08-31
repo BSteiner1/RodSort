@@ -15,6 +15,13 @@
 - It has a Space Complexity of θ(n)
 - It is **not** a [stable sorting algorithm](https://www.geeksforgeeks.org/stability-in-sorting-algorithms/) 
 
+### ⏳ Expected Run-Time Proof:
+
+<img src="https://user-images.githubusercontent.com/96544001/187798548-c8e277a5-02fe-4dbf-b6dd-475b0483440c.jpg" width="800" height="800" />
+<img src="https://user-images.githubusercontent.com/96544001/187798562-6567dd91-e268-4ea9-acae-ab437d8ca1f3.jpg" width="800" height="800" />
+<img src="https://user-images.githubusercontent.com/96544001/187798572-91b96e9a-1ac0-4aa8-8691-dfd888d13be9.jpg" width="800" height="800" />
+
+
 ### 🤔 How does it compare to other sorting algorithms?
 <img src="https://user-images.githubusercontent.com/96544001/184625085-fe4c0529-ae2b-47be-a9ca-a530e46f8141.png" width="700" height="400" />
 
