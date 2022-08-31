@@ -7,7 +7,7 @@
 
 ### 🔧 How it works:
 - ➗ It employs a [Divide and Conquer](https://www.geeksforgeeks.org/divide-and-conquer-algorithm-introduction/) approach during `initial_sort()` and `empty_bin()`:
-- 🔀 And then uses `Merge()` from [MergeSort()](https://www.geeksforgeeks.org/merge-sort/)
+- 🔀 And then uses `Merge()` from [MergeSort()](https://www.geeksforgeeks.org/merge-sort/) which has run-time θ(n)
 
 ### ❓ **Analysis:**
 - It has a best-case run-time of O(n)
